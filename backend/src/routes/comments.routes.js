@@ -13,7 +13,7 @@ import {
 const router = Router();
 
 // Ver todos os comentários feitos por um utilizador
-router.get("/user/:nickName", getCommentsByUser);
+router.get("/user/:nickName", verifyToken, getCommentsByUser);
 
 // Editar comentário (autenticado)
 router.put("/:commentId", verifyToken, updateComment);

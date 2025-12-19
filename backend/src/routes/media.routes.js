@@ -43,7 +43,7 @@ router.post("/:mediaId/comments", verifyToken, createComment);
 
 //ver comentários de um media
 //view comments of a media
-router.get("/:mediaId/comments", listComments);
+router.get("/:mediaId/comments", verifyToken, listComments);
 
 //criar media (apenas admin)
 //create media (only admin)
@@ -51,7 +51,7 @@ router.post("/", verifyToken, requireAdmin, createMedia);
 
 //obter todos media com paginação e ordenação
 //get all media with pagination and sorting
-router.get("/", verifyToken, listAllMedia);
+router.get("/",  listAllMedia);
 
 //pesquisar por título
 //search by title
