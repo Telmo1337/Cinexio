@@ -36,10 +36,9 @@ const Navbar = ({ children }: NavbarProps) => {
             <Flex
               gap="xs"
               direction="row"
-              visibleFrom="sm"
               align="center"
             >
-              <Flex>
+              <Flex visibleFrom="sm">
                 {mainNavLinks.map((link) => (
                 <NavLink
                   key={link.to}
