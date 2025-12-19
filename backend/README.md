@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="/assets/cinexio.svg" alt="Cinexio Logo" width="600" />
+  <img src="./assets/cinexio.svg" alt="Cinexio Logo" width="600" />
 </p>
 
 
