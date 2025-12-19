@@ -1,0 +1,215 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//definição de papéis de utilizador
+//user role definition
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+//definição de privacidade do perfil
+//profile privacy definition
+enum ProfilePrivacy {  
+  PUBLIC
+  FRIENDS
+  PRIVATE
+}
+
+
+//tabela de utilizadores
+//table of users
+model User {
+  id          String         @id @default(uuid())
+  firstName   String
+  lastName    String
+  nickName    String         @unique
+  email       String         @unique
+  password    String
+  avatar      String?
+  bio         String?
+  preferences Json?
+  language    String?        @default("EN")
+  role        UserRole       @default(MEMBER)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime?
+  privacy     ProfilePrivacy @default(PUBLIC)
+  media       UserMedia[]
+  comments    Comment[]
+  medias      Media[]
+
+  lists List[]
+
+  refreshTokens RefreshToken[]
+  passwordResets PasswordReset[]
+
+  commentLikes CommentLike[] 
+}
+
+
+
+
+//tabela de tokens de atualização
+//table of refresh tokens
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+
+//tabela de redefinição de palavra-passe
+//table of password reset
+model PasswordReset {       
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  used      Boolean  @default(false)
+}
+
+
+//tabela de media (filmes e séries)
+//table of media (movies and series)
+model Media {
+  id          String      @id @default(uuid())
+  title       String
+  type        MediaType
+  category    Json
+  releaseYear Int
+  endYear     Int?
+  country     String?
+  language    String?
+  director    String?
+  image       String?
+  rating      Int?
+  description String?
+  platform    Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime?   @updatedAt
+  userId      String
+  users       UserMedia[]
+  comments    Comment[]
+  user        User        @relation(fields: [userId], references: [id])
+  listItems   ListItem[]
+
+  @@index([userId], map: "Media_userId_fkey")
+}
+
+
+//tabela de relação entre utilizadores e media (filmes e séries)
+//table of relation between users and media (movies and series)
+model UserMedia {
+  id         String    @id @default(uuid())
+  userId     String
+  mediaId    String
+  favorite   Boolean   @default(false)
+  watched    Boolean   @default(false)
+  rating     Int?
+  notes      String?
+  calendarAt DateTime?
+
+  user   User        @relation(fields: [userId], references: [id])
+  media  Media       @relation(fields: [mediaId], references: [id])
+  status WatchStatus @default(WANT_TO_WATCH)
+
+  @@unique([userId, mediaId]) // impede duplicar o mesmo filme para o mesmo user
+  @@index([mediaId], map: "UserMedia_mediaId_fkey")
+}
+
+
+//tabela de listas de media criadas pelos utilizadores
+//table of media lists created by users
+model List {
+  id        String     @id @default(uuid())
+  name      String
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  items     ListItem[]
+  privacy   Privacy    @default(PRIVATE)
+  createdAt DateTime   @default(now())
+}
+
+//tabela de itens em cada lista de media
+//table of items in each media list
+model ListItem {
+  id      String @id @default(uuid())
+  listId  String
+  mediaId String
+
+  list  List  @relation(fields: [listId], references: [id])
+  media Media @relation(fields: [mediaId], references: [id])
+
+  addedAt DateTime @default(now())
+
+  @@unique([listId, mediaId])
+}
+
+//definição de privacidade da lista
+//list privacy definition
+enum Privacy {
+  PUBLIC
+  PRIVATE
+}
+
+//tabela de comentários feitos pelos utilizadores nas media (filmes e séries)
+//table of comments made by users on media (movies and series)
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  mediaId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  media Media @relation(fields: [mediaId], references: [id])
+  likes   CommentLike[] 
+
+  @@index([userId], map: "Comment_userId_fkey")
+  @@index([mediaId], map: "Comment_mediaId_fkey")
+}
+
+//tabela de likes em comentários feitos pelos utilizadores
+//table of likes on comments made by users
+model CommentLike {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id])
+
+  // Impede like duplicado do mesmo user no mesmo comment
+  // Prevents duplicate like from the same user on the same comment
+  @@unique([userId, commentId])
+  @@index([commentId])
+}
+
+
+
+//definição de tipo de media
+//media type definition
+enum MediaType {
+  MOVIE
+  SERIES
+}
+
+//definição de status de visualização
+//watch status definition
+enum WatchStatus {
+  WANT_TO_WATCH
+  WATCHING
+  WATCHED
+  ABANDONED
+}

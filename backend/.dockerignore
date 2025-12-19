@@ -1,0 +1,7 @@
+node_modules/
+mysql-data/
+npm-debug.log
+*.log
+.env
+.vscode/
+.
