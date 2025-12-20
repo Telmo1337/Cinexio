@@ -1,9 +1,9 @@
-import { AppShell, Burger, Group, NavLink, Text, Flex } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Anchor, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
 
-import { mainNavLinks } from '../navigation/constants/navLinks.ts';
+import { publicNavLinks } from './constants/publicNavLinks.ts';
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 
 
@@ -11,7 +11,7 @@ interface NavbarProps {
   children?: ReactNode;
 }
 
-const Navbar = ({ children }: NavbarProps) => {
+const PublicNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -24,26 +24,32 @@ const Navbar = ({ children }: NavbarProps) => {
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
-            <Text
+            <Anchor
               size="xl"
               fw={700}
-              
+              href='/'
               style={{ textDecoration: 'none' }}
             >
               Cinexio
-            </Text>
+            </Anchor>
             
             <Flex
-              gap="xs"
+              gap="lg"
               direction="row"
               align="center"
             >
-              <Flex visibleFrom="sm">
-                {mainNavLinks.map((link) => (
+              <Flex visibleFrom="sm"  >
+                {publicNavLinks.map((link) => (
                 <NavLink
                   key={link.to}
                   label={link.label}
                   href={link.to}
+                  fw={500}
+                  styles={{
+                    label: {
+                      whiteSpace: 'nowrap',
+                    }
+                  }}
                 />
               ))}
               </Flex>
@@ -55,7 +61,7 @@ const Navbar = ({ children }: NavbarProps) => {
       </AppShell.Header>
 
       <AppShell.Navbar py="md" px={4}>
-        {mainNavLinks.map((link) => (
+        {publicNavLinks.map((link) => (
           <NavLink key={link.to} label={link.label} href={link.to} mb="sm" />
         )
         )}
@@ -68,4 +74,4 @@ const Navbar = ({ children }: NavbarProps) => {
   )
 }
 
-export default Navbar
+export default PublicNavbar
