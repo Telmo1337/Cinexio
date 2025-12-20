@@ -1,28 +1,24 @@
-
+// src/api/http.ts
 const baseUrl = "http://localhost:5050/api/v1";
 
+export async function request<T>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> {
 
-//this function will be used in all services files to make http requests
-export async function request(endpoint: string, options: RequestInit = {}) {
+  const token = localStorage.getItem("token");
 
-    //retrieve token from local storage
-    const token = localStorage.getItem("token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU4NDQ0MDhiLWUyOGUtNGUxYi1iZGI1LWQ2NTJkYWMyYTdjMiIsImVtYWlsIjoidGVsbW9AaXB2Yy5wdCIsInJvbGUiOiJBRE1JTiIsIm5pY2tOYW1lIjoiVFIyNSIsImlhdCI6MTc2NjE2NTI0NywiZXhwIjoxNzY2NzcwMDQ3fQ.MBlLRIU7_P3i4WyybwVFDa6gq8WdDEigEYEP5WPHQAc";
+  const response = await fetch(`${baseUrl}/${endpoint}`, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    ...options,
+  });
 
-    //calls backend api
-    //await _ means wait for the promise
-    const response = await fetch(`${baseUrl}/${endpoint}`, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-        },
-        ...options,
-    });
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
 
-    //error check
-    if(!response.ok){
-        throw new Error(`Error: ${response.status}`);
-    }
-
-    //return JSON
-    return response.json();
+  return response.json() as Promise<T>;
 }

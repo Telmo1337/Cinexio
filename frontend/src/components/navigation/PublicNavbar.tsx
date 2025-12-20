@@ -3,8 +3,9 @@ import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
 
-import { publicNavLinks } from './constants/publicNavLinks.ts';
+
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
+import { publicNavLinks } from './constants/publicNavLinks.ts';
 
 
 interface NavbarProps {
@@ -27,7 +28,7 @@ const PublicNavbar = ({ children }: NavbarProps) => {
             <Anchor
               size="xl"
               fw={700}
-              href='/'
+              href="/"
               style={{ textDecoration: 'none' }}
             >
               Cinexio

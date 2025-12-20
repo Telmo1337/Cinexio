@@ -1,18 +1,18 @@
-// src/routes/PrivateRoute.tsx
+import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import type { JSX } from "react";
+import { useAuth } from "../../src/context/useAuth";
 
-interface PrivateRouteProps {
-  children: JSX.Element;
-  roles?: ("MEMBER" | "ADMIN")[];
+export function PrivateRoute({
+  children,
+  roles,
+}: {
+  children: ReactNode;
+  roles: ("MEMBER" | "ADMIN")[];
+}) {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" />; // não logado
+  if (!roles.includes(user.role)) return <Navigate to="/" />; // role não permitida
+
+  return <>{children}</>;
 }
-
-export const PrivateRoute = ({ children, roles }: PrivateRouteProps) => {
-  const { isLoggedIn, userRole } = useAuth();
-
-  if (!isLoggedIn) return <Navigate to="/login" />; // redireciona se não logado
-  if (roles && !roles.includes(userRole!)) return <Navigate to="/app" />; // sem permissão
-
-  return children;
-};

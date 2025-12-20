@@ -1,23 +1,20 @@
-// src/routes/AdminRoutes.tsx
+// src/routes/admin/AdminRoutes.tsx
 import { Routes, Route } from "react-router-dom";
-import AdminLayout from "../../layouts/admin/AdminLayout";
-import CreateMedia from "../../pages/admin/CreateMedia";
-import { AdminRoute } from "../AdminRoute";
+import AdminDashboard from "../../pages/admin/AdminDashboard";
+
+import { PrivateRoute } from "../PrivateRoute";
 
 export default function AdminRoutes() {
   return (
-    <AdminLayout>
-      <Routes>
-        <Route
-          path="createMedia"
-          element={
-            <AdminRoute>
-              <CreateMedia />
-            </AdminRoute>
-          }
-        />
-        {/* Outras páginas ADMIN */}
-      </Routes>
-    </AdminLayout>
+    <Routes>
+      <Route
+        path=""
+        element={
+          <PrivateRoute roles={["ADMIN"]}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
   );
 }

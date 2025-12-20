@@ -1,16 +1,12 @@
-// src/routes/AdminRoute.tsx
+import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import type { JSX } from "react";
+import { useAuth } from "../../src/context/useAuth";
 
-interface AdminRouteProps {
-  children: JSX.Element;
-}
+export const AdminRoute = ({ children }: { children: ReactNode }) => {
+  const { user } = useAuth();
 
-export const AdminRoute = ({ children }: AdminRouteProps) => {
-  const { isLoggedIn, userRole } = useAuth();
+  if (!user) return <Navigate to="/login" />;
+  if (user.role !== "ADMIN") return <Navigate to="/" />;
 
-  if (!isLoggedIn || userRole !== "ADMIN") return <Navigate to="/login" />;
-
-  return children;
+  return <>{children}</>;
 };
