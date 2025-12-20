@@ -12,8 +12,13 @@ export default function PublicRoutes() {
 
   const { user } = useAuth();
 
-  if( user ){
-    return <Navigate to="/app" replace />;
+  if (user) {
+    return (
+      <Navigate
+        to={user.role === "ADMIN" ? "/admin" : "/app"}
+        replace
+      />
+    );
   }
 
 
@@ -22,17 +27,17 @@ export default function PublicRoutes() {
       <Routes>
         <Route
           path="/"
-          element={<Home /> }
+          element={<Home />}
         />
 
         <Route
           path="/signup"
-          element={ <Register /> }
+          element={<Register />}
         />
 
         <Route
           path="/login"
-          element={ <Login /> }
+          element={<Login />}
         />
       </Routes>
     </PublicNavbar>

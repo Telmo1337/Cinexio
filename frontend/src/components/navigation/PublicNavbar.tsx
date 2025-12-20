@@ -47,7 +47,7 @@ const PublicNavbar = ({ children }: NavbarProps) => {
                     label={link.label}
                     component={Link}
                     to={link.to}
-                    active={location.pathname === link.to}
+                    active={location.pathname.startsWith("/app/" + link.to)}
                     styles={{
                       label: {
                         whiteSpace: 'nowrap',

@@ -1,10 +1,10 @@
 export const adminNavLinks = [
     {
         label: 'Create Media',
-        to: '/create-media',
+        to: 'create-media',
     },
     {
         label: 'Profile',
-        to: '/profile',
+        to: 'profile',
     },
 ]
