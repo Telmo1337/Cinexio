@@ -2,7 +2,7 @@ import { AppShell, Burger, Group, NavLink, Anchor, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
-
+import { Link, useLocation } from "react-router-dom";
 
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 import { publicNavLinks } from './constants/publicNavLinks.ts';
@@ -14,6 +14,7 @@ interface NavbarProps {
 
 const PublicNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
+  const location = useLocation();
 
   return (
     <AppShell
@@ -33,7 +34,7 @@ const PublicNavbar = ({ children }: NavbarProps) => {
             >
               Cinexio
             </Anchor>
-            
+
             <Flex
               gap="lg"
               direction="row"
@@ -41,29 +42,36 @@ const PublicNavbar = ({ children }: NavbarProps) => {
             >
               <Flex visibleFrom="sm"  >
                 {publicNavLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  label={link.label}
-                  href={link.to}
-                  fw={500}
-                  styles={{
-                    label: {
-                      whiteSpace: 'nowrap',
-                    }
-                  }}
-                />
-              ))}
+                  <NavLink
+                    key={link.to}
+                    label={link.label}
+                    component={Link}
+                    to={link.to}
+                    active={location.pathname === link.to}
+                    styles={{
+                      label: {
+                        whiteSpace: 'nowrap',
+                      }
+                    }}
+                  />
+                ))}
               </Flex>
               <ColorSchemeToggle />
             </Flex>
-            
+
           </Group>
         </Group>
       </AppShell.Header>
 
       <AppShell.Navbar py="md" px={4}>
         {publicNavLinks.map((link) => (
-          <NavLink key={link.to} label={link.label} href={link.to} mb="sm" />
+          <NavLink
+            key={link.to}
+            label={link.label}
+            component={Link}
+            to={link.to}
+            active={location.pathname === link.to}
+            mb="sm" />
         )
         )}
       </AppShell.Navbar>

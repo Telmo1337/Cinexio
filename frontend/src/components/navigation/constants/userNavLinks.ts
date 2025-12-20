@@ -1,10 +1,10 @@
 export const userNavLinks = [
     {
         label: 'Profile',
-        to: '/profile',
+        to: 'profile',
     },
     {
         label: 'Settings',
-        to: '/settings',
+        to: 'settings',
     },
 ]
