@@ -7,6 +7,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 import { publicNavLinks } from './constants/publicNavLinks.ts';
 
+import { useMantineColorScheme } from "@mantine/core";
+import { useHeadroom } from '@mantine/hooks';
 
 interface NavbarProps {
   children?: ReactNode;
@@ -15,11 +17,13 @@ interface NavbarProps {
 const PublicNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
   const location = useLocation();
+  const { colorScheme } = useMantineColorScheme();
+  const pinned = useHeadroom({ fixedAt: 120 });
 
   return (
     <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
+      header={{ height: 60, collapsed: !pinned, }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened, } }}
       padding="md"
     >
       <AppShell.Header>
@@ -28,9 +32,11 @@ const PublicNavbar = ({ children }: NavbarProps) => {
           <Group justify="space-between" style={{ flex: 1 }}>
             <Anchor
               size="xl"
-              fw={700}
+              fw={800}
               href="/"
               style={{ textDecoration: 'none' }}
+              c={colorScheme === "dark" ? "white" : "black"}
+
             >
               Cinexio
             </Anchor>
@@ -48,11 +54,14 @@ const PublicNavbar = ({ children }: NavbarProps) => {
                     component={Link}
                     to={link.to}
                     active={location.pathname.startsWith("/app/" + link.to)}
+                    fw={600}
                     styles={{
                       label: {
                         whiteSpace: 'nowrap',
                       }
                     }}
+                    c={colorScheme === "dark" ? "white" : "black"}
+
                   />
                 ))}
               </Flex>
