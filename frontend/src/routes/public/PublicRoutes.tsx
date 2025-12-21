@@ -39,6 +39,9 @@ export default function PublicRoutes() {
           path="/login"
           element={<Login />}
         />
+
+        {/*catch-all*/}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </PublicNavbar>
   );
