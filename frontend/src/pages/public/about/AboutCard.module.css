@@ -1,0 +1,14 @@
+.card {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease;
+}
+
+.card:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--mantine-color-body),
+    rgb(233, 233, 233) 20%
+  );
+}

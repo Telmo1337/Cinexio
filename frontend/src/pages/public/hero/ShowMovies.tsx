@@ -10,7 +10,7 @@ import tvshow3 from "../../../assets/media/tvshow3.jpg"
 
 const ShowMovies = () => {
     return (
-        <Box w="100%" px={{ base: 20, sm: 50 }}>
+        <Box w="100%" px={{ base: 2, sm: 2 }} mb={50}>
             <SimpleGrid
                 cols={{ base: 1, sm: 3, lg: 6 }}
                 spacing={{ base: 10, sm: "md" }}
@@ -23,6 +23,7 @@ const ShowMovies = () => {
                             style={{
                                 aspectRatio: "2 / 3",
                                 width: "100%",
+                                height: "100%",
                             }}
                         >
                             <Image
@@ -32,6 +33,8 @@ const ShowMovies = () => {
                                 h="100%"
                                 w="100%"
                                 fit="cover"
+                                style={{ filter: "brightness(0.9)", border: "2px solid rgba(255, 255, 255, 1)" }} 
+                                
                             />
                         </Box>
                     )

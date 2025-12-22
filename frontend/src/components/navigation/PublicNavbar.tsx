@@ -8,7 +8,7 @@ import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 import { publicNavLinks } from './constants/publicNavLinks.ts';
 
 import { useMantineColorScheme } from "@mantine/core";
-import { useHeadroom } from '@mantine/hooks';
+
 
 interface NavbarProps {
   children?: ReactNode;
@@ -18,17 +18,17 @@ const PublicNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
   const location = useLocation();
   const { colorScheme } = useMantineColorScheme();
-  const pinned = useHeadroom({ fixedAt: 120 });
+
 
   return (
     <AppShell
-      header={{ height: 60, collapsed: !pinned, }}
+      header={{ height: 60}}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened, } }}
       padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm"    />
           <Group justify="space-between" style={{ flex: 1 }}>
             <Anchor
               size="xl"
@@ -80,7 +80,11 @@ const PublicNavbar = ({ children }: NavbarProps) => {
             component={Link}
             to={link.to}
             active={location.pathname === link.to}
-            mb="sm" />
+            mb="sm"
+            fw={600}
+            c={colorScheme === "dark" ? "white" : "black"}
+            />
+            
         )
         )}
       </AppShell.Navbar>
