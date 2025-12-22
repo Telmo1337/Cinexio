@@ -1,10 +1,10 @@
 // src/routes/public/PublicRoutes.tsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../../pages/public/Home";
-import Register from "../../pages/public/auth/Register";
-import Login from "../../pages/public/auth/Login";
 import PublicNavbar from "../../components/navigation/PublicNavbar";
 import { useAuth } from "../../context/useAuth";
+import LoginPage from "../../pages/public/auth/login/LoginPage";
+import RegisterPage from "../../pages/public/auth/register/RegisterPage";
 
 
 
@@ -32,12 +32,12 @@ export default function PublicRoutes() {
 
         <Route
           path="/signup"
-          element={<Register />}
+          element={<RegisterPage />}
         />
 
         <Route
           path="/login"
-          element={<Login />}
+          element={<LoginPage />}
         />
 
         {/*catch-all*/}

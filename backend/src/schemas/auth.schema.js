@@ -17,7 +17,7 @@ export const registerSchema = z.object({
 // Validação para login
 export const loginSchema = z.object({
   identifier: z.string().min(1, "Email or nickname is required"),
-  password: z.string().min(1, "Password is required"),
+  password: z.string().min(6, "Password is required"),
 });
 
 
