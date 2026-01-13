@@ -37,12 +37,12 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   return (
     <Center
       component="form"
-      h="100%"
+   
       onSubmit={form.onSubmit(onSubmit)}
     >
       <Paper
-        w={420}
-        p="xl"
+        w={400}
+        p="lg"
         radius="lg"
         withBorder
         shadow="xl"
@@ -52,7 +52,7 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           border: "1px solid rgba(255,255,255,0.25)",
         }}
       >
-        <Stack>
+        <Stack >
           <Title order={2} c="white">
             Create your account
           </Title>
