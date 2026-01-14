@@ -14,7 +14,7 @@ export default function PrivateRoutes() {
         <Route
           index
           element={
-            <PrivateRoute roles={["MEMBER"]}>
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
               <Movies />
             </PrivateRoute>
           }
@@ -24,7 +24,7 @@ export default function PrivateRoutes() {
         <Route
           path="profile"
           element={
-            <PrivateRoute roles={["MEMBER"]}>
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
               <Profile />
             </PrivateRoute>
           }
@@ -34,7 +34,7 @@ export default function PrivateRoutes() {
         <Route
           path="settings"
           element={
-            <PrivateRoute roles={["MEMBER"]}>
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
               <Settings />
             </PrivateRoute>
           }
