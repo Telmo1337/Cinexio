@@ -165,10 +165,11 @@ export default function MediaForm({
                   <Grid.Col span={12}>
                     <Textarea
                       label="Description"
-                      autosize
-                      minRows={3}
+                      maxLength={500}
+                      description="Máx. 500 caracteres"
                       {...form.getInputProps("description")}
                     />
+
                   </Grid.Col>
                 </Grid>
 

@@ -290,7 +290,7 @@ export async function getMediaByIdService(id) {
 
 
 
-//  ATUALIZAR MEDIA
+// ATUALIZAR MEDIA
 export async function updateMediaService(id, body, user) {
 
   if (user.role !== "ADMIN") {
@@ -305,13 +305,33 @@ export async function updateMediaService(id, body, user) {
   const media = await prisma.media.findUnique({ where: { id } });
   if (!media) throw new Error("Media not found");
 
+  const data = {
+    ...result.data,
+
+    // arrays → string
+    category: Array.isArray(result.data.category)
+      ? JSON.stringify(result.data.category)
+      : result.data.category,
+
+    platform: Array.isArray(result.data.platform)
+      ? JSON.stringify(result.data.platform)
+      : result.data.platform,
+
+    //  PROTEÇÃO CRÍTICA
+    description:
+      typeof result.data.description === "string"
+        ? result.data.description.slice(0, 1000)
+        : undefined,
+  };
+
   const updated = await prisma.media.update({
     where: { id },
-    data: result.data
+    data,
   });
 
   return updated;
 }
+
 
 
 

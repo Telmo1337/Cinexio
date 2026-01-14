@@ -1,24 +1,37 @@
 // src/routes/private/PrivateRoutes.tsx
 import { Routes, Route } from "react-router-dom";
-import Movies from "../../pages/app/Movies";
+
 import Profile from "../../pages/app/Profile";
 import Settings from "../../pages/app/Settings";
 import { PrivateRoute } from "../PrivateRoute";
-import UserNavbar from "../../components/navigation/UserNavbar";
+import MediaDetails from "../../pages/app/Media/MediaDetails";
+import AppLayout from "../../components/AppLayout";
+import Media from "../../pages/app/Media";
+
 
 export default function PrivateRoutes() {
   return (
-    <UserNavbar>
+    <AppLayout>
       <Routes>
         {/* /app */}
         <Route
           index
           element={
             <PrivateRoute roles={["MEMBER", "ADMIN"]}>
-              <Movies />
+              <Media />
             </PrivateRoute>
           }
         />
+        {/* /app/media/:id */}
+        <Route
+          path="media/:id"
+          element={
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
+              <MediaDetails />
+            </PrivateRoute>
+          }
+        />
+
 
         {/* /app/profile */}
         <Route
@@ -40,6 +53,6 @@ export default function PrivateRoutes() {
           }
         />
       </Routes>
-    </UserNavbar>
+    </AppLayout>
   );
 }
