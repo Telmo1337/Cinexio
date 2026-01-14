@@ -15,5 +15,5 @@ export const updatePrivacySchema = z.object({
 
 // Schema para atualizar avatar do utilizador
 export const updateAvatarSchema = z.object({
-  avatar: z.string().url("Invalid avatar URL")
+  avatar: z.string().url()
 });

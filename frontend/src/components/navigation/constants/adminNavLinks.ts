@@ -1,5 +1,9 @@
 export const adminNavLinks = [
     {
+        label: 'Dashboard',
+        to: '/',
+    },
+    {
         label: 'Media List',
         to: 'media',
     },

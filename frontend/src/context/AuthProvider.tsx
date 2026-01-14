@@ -1,22 +1,27 @@
-// src/context/AuthProvider.tsx
 import { type ReactNode, useState } from "react";
-import type { User } from "./types";
+import type { AuthUser } from "./types";
 import { AuthContext } from "./AuthContext";
 import { decodeToken } from "./utils/decodeToken";
 
-function getInitialUser(): User | null {
+function getInitialUser(): AuthUser | null {
   const token = localStorage.getItem("token");
   if (!token) return null;
 
   const decoded = decodeToken(token);
-  return decoded ?? null;
+
+  if (!decoded?.nickName || !decoded?.role) return null;
+
+  return {
+    nickName: decoded.nickName,
+    role: decoded.role,
+  };
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(getInitialUser);
-  const [loading] = useState(false); // já não é necessário
+  const [user, setUser] = useState<AuthUser | null>(getInitialUser);
+  const [loading] = useState(false);
 
-  const login = (userData: User) => {
+  const login = (userData: AuthUser) => {
     setUser(userData);
   };
 

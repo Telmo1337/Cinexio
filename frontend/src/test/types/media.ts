@@ -3,7 +3,7 @@ export type MediaType = "MOVIE" | "SERIES";
 export interface Media {
   id: string;
   title: string;
-  type: MediaType;
+  type: "MOVIE" | "SERIES";
   category: string[];
   releaseYear: number;
   endYear?: number;
@@ -13,6 +13,7 @@ export interface Media {
   image?: string;
   description?: string;
   platform?: string[];
+  rating?: number;          
   createdAt: string;
   userId: string;
 }

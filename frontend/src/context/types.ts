@@ -1,12 +1,13 @@
-// src/context/types.ts
-export type User = {
-  name: string;
+export type AuthUser = {
+  id?: string;
+  nickName: string;
+  email?: string;
   role: "MEMBER" | "ADMIN";
 };
 
 export type AuthContextType = {
-  user: User | null;
-  loading: boolean; 
-  login: (userData: User) => void;
+  user: AuthUser | null;
+  loading: boolean;
+  login: (userData: AuthUser) => void;
   logout: () => void;
 };

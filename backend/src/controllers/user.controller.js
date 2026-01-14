@@ -1,9 +1,12 @@
 // Controller: recebe pedidos HTTP e delega para a camada de serviços
 
+import { prisma } from "../db/prisma.js";
+
 import { z } from "zod";
 
-//importar funções de serviço
-//import service functions
+
+
+
 import {
   getUserProfileService,
   getAllUsersService,
@@ -24,6 +27,33 @@ import {
 //import função de validação
 //import validation function
 import { validateSchema } from "../utils/validation.js";
+
+export async function getMyProfile(req, res, next) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        nickName: true,
+        avatar: true,
+        bio: true,
+        preferences: true,
+        language: true,
+        privacy: true,
+        createdAt: true,
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
 
 
 // VER PERFIL COM PRIVACIDADE

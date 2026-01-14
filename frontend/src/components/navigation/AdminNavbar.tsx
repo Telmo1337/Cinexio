@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, NavLink, Text, Flex } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Flex, Anchor } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
@@ -25,14 +25,16 @@ const AdminNavbar = ({ children }: NavbarProps) => {
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
-            <Text
+            <Anchor
               size="xl"
-              fw={700}
-
+              fw={800}
+              href="/"
               style={{ textDecoration: 'none' }}
+             
+
             >
               Cinexio
-            </Text>
+            </Anchor>
 
             <Flex
               gap="lg"

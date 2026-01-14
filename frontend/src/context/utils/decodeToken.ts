@@ -1,7 +1,8 @@
 type DecodedToken = {
-  nickName?: string;
+  nickName: string;
   email?: string;
   role: "MEMBER" | "ADMIN";
+  exp?: number;
 };
 
 export function decodeToken(token: string) {
@@ -9,8 +10,12 @@ export function decodeToken(token: string) {
     const payload = token.split(".")[1];
     const decoded = JSON.parse(atob(payload)) as DecodedToken;
 
+    if (!decoded.nickName || !decoded.role) {
+      return null;
+    }
+
     return {
-      name: decoded.nickName ?? decoded.email ?? "User",
+      nickName: decoded.nickName,
       role: decoded.role,
     };
   } catch {

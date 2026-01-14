@@ -6,6 +6,14 @@ export type MediaPayload = Omit<
   "id" | "createdAt" | "userId"
 >;
 
+export type MediaListResponse = {
+  data: Media[];
+  page?: number;
+  pageSize?: number;
+  totalMedia?: number;
+};
+
+
 
 export const getAllMedia = async (): Promise<{ data: Media[] }> => {
   return request("media");

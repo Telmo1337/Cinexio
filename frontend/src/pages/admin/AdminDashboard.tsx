@@ -1,8 +1,32 @@
+import { SimpleGrid, Stack, Title, Loader, Center } from "@mantine/core";
 
-const AdminDashboard = () => {
+import StatCard from "../admin/Admin/StatCard";
+import QuickActions from "../admin/Admin/QuickActions";
+import { useAdminDashboard } from "../services/admin.service";
+
+export default function AdminDashboard() {
+  const { loading, stats } = useAdminDashboard();
+
+  if (loading) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    );
+  }
+
   return (
-    <div>AdminDashboard</div>
-  )
-}
+    <Stack>
+      <Title>Admin Dashboard</Title>
 
-export default AdminDashboard
+      <SimpleGrid cols={4}>
+        <StatCard label="Media" value={stats.mediaCount} />
+        <StatCard label="Users" value={stats.userCount} />
+        <StatCard label="Ratings" value="—" />
+        <StatCard label="Comments" value="—" />
+      </SimpleGrid>
+
+      <QuickActions />
+    </Stack>
+  );
+}
