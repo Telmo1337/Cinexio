@@ -20,11 +20,12 @@ export default function AdminDashboard() {
       <Title>Admin Dashboard</Title>
 
       <SimpleGrid cols={4}>
-        <StatCard label="Media" value={stats.mediaCount} />
-        <StatCard label="Users" value={stats.userCount} />
+        <StatCard label="Media" value={stats.mediaCount} to="/admin/media" />
+        <StatCard label="Users" value={stats.userCount} to="/admin/users" />
         <StatCard label="Ratings" value="—" />
         <StatCard label="Comments" value="—" />
       </SimpleGrid>
+
 
       <QuickActions />
     </Stack>

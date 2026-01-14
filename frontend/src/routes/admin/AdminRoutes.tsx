@@ -8,6 +8,7 @@ import Profile from "../../pages/admin/Profile";
 import EditMedia from "../../pages/admin/EditMedia";
 import MediaList from "../../pages/admin/MediaList";
 import MediaDetailsPage from "../../pages/admin/Media/MediaDetailsPage";
+import AdminUsers from "../../pages/admin/Admin/AdminUsers";
 
 export default function AdminRoutes() {
   const { user } = useAuth();
@@ -31,6 +32,7 @@ export default function AdminRoutes() {
         <Route path="create-media" element={<CreateMedia />} />
         <Route path="media/:id/edit" element={<EditMedia />} />
         <Route path="media/:id" element={<MediaDetailsPage />} />
+        <Route path="users" element={<AdminUsers />} />
 
         <Route path="profile" element={<Profile />} />
       </Routes>

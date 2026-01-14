@@ -11,3 +11,13 @@ export type ProfileUser = {
   privacy: "PUBLIC" | "FRIENDS" | "PRIVATE";
   createdAt: string;
 };
+
+
+export type AdminUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  nickName: string;
+  email: string;
+  createdAt: string;
+};
