@@ -6,15 +6,15 @@ export default function QuickActions() {
   return (
     <Group>
       <Button component={Link} to="/admin/create-media">
-        Criar Media
+        Create New Media
       </Button>
 
       <Button component={Link} to="/admin/media" variant="light">
-        Gerir Media
+        Manage Media
       </Button>
 
       <Button component={Link} to="/app" variant="subtle">
-        Ver catálogo público
+        See all the Catalog
       </Button>
     </Group>
   );

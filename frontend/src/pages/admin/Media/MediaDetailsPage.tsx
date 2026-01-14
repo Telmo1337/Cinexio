@@ -33,15 +33,17 @@ export default function MediaDetailsPage() {
           component={Link}
           to={`/admin/media/${media.id}/edit`}
         >
-          Editar
+          Edit
         </Button>
       </Group>
 
       <Card withBorder radius="md" shadow="sm">
         <Group align="flex-start">
           <Image
-            src={media.image || "/placeholder.png"}
-            width={200}
+            src={media.image}
+            w={200}
+            h={300}
+            fit="cover"
             radius="md"
           />
 

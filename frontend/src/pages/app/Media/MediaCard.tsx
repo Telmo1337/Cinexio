@@ -14,18 +14,20 @@ export default function MediaCard({ media }: Props) {
       withBorder
       shadow="sm"
       padding="sm"
+      h={460}
       style={{ cursor: "pointer" }}
       onClick={() => navigate(`/app/media/${media.id}`)}
     >
       <Card.Section>
         <Image
-          src={media.image || "https://via.placeholder.com/300x450"}
-          height={260}
+          src={media.image}
+          height={300}
+          fit="cover"
           alt={media.title}
         />
       </Card.Section>
 
-      <Stack gap={4} mt="sm">
+      <Stack gap={4} mt="sm" style={{ flex: 1 }}>
         <Group justify="space-between">
           <Text fw={600} lineClamp={1}>
             {media.title}
@@ -41,6 +43,10 @@ export default function MediaCard({ media }: Props) {
         {media.rating && (
           <Text size="sm">⭐ {media.rating.toFixed(1)}</Text>
         )}
+
+         <Text fw={600} fz="sm" lineClamp={3}>
+            {media.description}
+          </Text>
       </Stack>
     </Card>
   );

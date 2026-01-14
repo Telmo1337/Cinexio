@@ -37,18 +37,18 @@ export default function MediaFilters({
     return (
         <Group mb="md" grow>
             <TextInput
-                placeholder="Procurar por título"
+                placeholder="Search by title"
                 leftSection={<IconSearch size={16} />}
                 value={search}
                 onChange={(e) => setSearch(e.currentTarget.value)}
             />
 
             <Select
-                placeholder="Tipo"
+                placeholder="Type"
                 clearable
                 data={[
-                    { value: "MOVIE", label: "Filme" },
-                    { value: "SERIES", label: "Série" },
+                    { value: "MOVIE", label: "Movie" },
+                    { value: "SERIES", label: "Series" },
                 ]}
                 value={typeFilter}
                 onChange={(v) =>
@@ -57,7 +57,7 @@ export default function MediaFilters({
             />
 
             <Select
-                placeholder="Categoria"
+                placeholder="Category"
                 clearable
                 data={[
                     "Action",
@@ -73,7 +73,7 @@ export default function MediaFilters({
             />
 
             <NumberInput
-                placeholder="Ano"
+                placeholder="Year"
                 min={1900}
                 max={new Date().getFullYear()}
                 value={yearFilter}
@@ -84,7 +84,7 @@ export default function MediaFilters({
 
 
             <Button variant="light" onClick={onReset}>
-                Limpar
+                Clear Filters
             </Button>
         </Group>
     );
