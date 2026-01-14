@@ -1,11 +1,12 @@
-import { AppShell, Burger, Group, NavLink, Flex, Anchor } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Flex, Anchor, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 import { adminNavLinks } from './constants/adminNavLinks.ts';
+import { useAuth } from '../../context/useAuth.ts';
 
 
 interface NavbarProps {
@@ -15,6 +16,16 @@ interface NavbarProps {
 const AdminNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
   const location = useLocation();
+
+
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/", { replace: true });
+  }
+
   return (
     <AppShell
       header={{ height: 60 }}
@@ -30,7 +41,7 @@ const AdminNavbar = ({ children }: NavbarProps) => {
               fw={800}
               href="/"
               style={{ textDecoration: 'none' }}
-             
+
 
             >
               Cinexio
@@ -56,7 +67,11 @@ const AdminNavbar = ({ children }: NavbarProps) => {
                     }}
                   />
                 ))}
+            
               </Flex>
+              <Button variant="subtle" color="red" onClick={handleLogout}>
+                  Logout
+                </Button>
               <ColorSchemeToggle />
             </Flex>
 

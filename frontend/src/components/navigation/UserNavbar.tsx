@@ -3,15 +3,17 @@ import {
   Burger,
   Group,
   NavLink,
-  Text,
   Flex,
+  Anchor,
+  Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import type { ReactNode } from "react";
 
 import { ColorSchemeToggle } from "../scheme/ColorSchemeToggle";
 import { userNavLinks } from "./constants/userNavLinks";
+import { useAuth } from "../../context/useAuth";
 
 interface NavbarProps {
   children?: ReactNode;
@@ -20,6 +22,14 @@ interface NavbarProps {
 const UserNavbar = ({ children }: NavbarProps) => {
   const [opened, { toggle }] = useDisclosure();
   const location = useLocation();
+
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/", { replace: true });
+  }
 
   return (
     <AppShell
@@ -42,9 +52,16 @@ const UserNavbar = ({ children }: NavbarProps) => {
           />
 
           <Group justify="space-between" style={{ flex: 1 }}>
-            <Text size="xl" fw={700}>
+            <Anchor
+              size="xl"
+              fw={800}
+              href="/"
+              style={{ textDecoration: 'none' }}
+
+
+            >
               Cinexio
-            </Text>
+            </Anchor>
 
             <Flex gap="lg" align="center">
               <Flex visibleFrom="sm">
@@ -62,7 +79,9 @@ const UserNavbar = ({ children }: NavbarProps) => {
                   />
                 ))}
               </Flex>
-
+              <Button variant="subtle" color="red" onClick={handleLogout}>
+                Logout
+              </Button>
               <ColorSchemeToggle />
             </Flex>
           </Group>

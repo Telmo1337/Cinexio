@@ -17,13 +17,16 @@ export default function OverviewTab({ media }: { media: Media }) {
             {media.endYear ? ` – ${media.endYear}` : ""}
           </Text>
 
-          <Group gap="xs">
-            {media.category.map((c) => (
-              <Badge key={c} variant="light">
-                {c}
-              </Badge>
-            ))}
-          </Group>
+          {Array.isArray(media.category) && media.category.length > 0 && (
+            <Group gap="xs">
+              {media.category.map((c) => (
+                <Badge key={c} variant="light">
+                  {c}
+                </Badge>
+              ))}
+            </Group>
+          )}
+
 
           <Text mt="sm">{media.description}</Text>
         </Stack>

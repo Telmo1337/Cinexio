@@ -2,12 +2,13 @@ import { AppShell, Burger, Group, NavLink, Anchor, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 
 import { ColorSchemeToggle } from '../scheme/ColorSchemeToggle.tsx';
 import { publicNavLinks } from './constants/publicNavLinks.ts';
 
 import { useMantineColorScheme } from "@mantine/core";
+
 
 
 interface NavbarProps {
@@ -20,15 +21,17 @@ const PublicNavbar = ({ children }: NavbarProps) => {
   const { colorScheme } = useMantineColorScheme();
 
 
+
+
   return (
     <AppShell
-      header={{ height: 60}}
+      header={{ height: 60 }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened, } }}
       padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm"    />
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
             <Anchor
               size="xl"
@@ -65,6 +68,7 @@ const PublicNavbar = ({ children }: NavbarProps) => {
                   />
                 ))}
               </Flex>
+              
               <ColorSchemeToggle />
             </Flex>
 
@@ -83,8 +87,8 @@ const PublicNavbar = ({ children }: NavbarProps) => {
             mb="sm"
             fw={600}
             c={colorScheme === "dark" ? "white" : "black"}
-            />
-            
+          />
+
         )
         )}
       </AppShell.Navbar>

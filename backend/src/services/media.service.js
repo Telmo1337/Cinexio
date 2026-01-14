@@ -308,21 +308,24 @@ export async function updateMediaService(id, body, user) {
   const data = {
     ...result.data,
 
-    // arrays → string
-    category: Array.isArray(result.data.category)
-      ? JSON.stringify(result.data.category)
-      : result.data.category,
+    ...(Array.isArray(result.data.category) && {
+      category: {
+        set: result.data.category,
+      },
+    }),
 
-    platform: Array.isArray(result.data.platform)
-      ? JSON.stringify(result.data.platform)
-      : result.data.platform,
+    ...(Array.isArray(result.data.platform) && {
+      platform: {
+        set: result.data.platform,
+      },
+    }),
 
-    //  PROTEÇÃO CRÍTICA
     description:
       typeof result.data.description === "string"
         ? result.data.description.slice(0, 1000)
         : undefined,
   };
+
 
   const updated = await prisma.media.update({
     where: { id },
