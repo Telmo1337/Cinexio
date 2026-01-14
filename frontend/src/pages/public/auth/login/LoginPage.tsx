@@ -27,10 +27,12 @@ const LoginPage = () => {
     }
 
     //  guardar user no contexto
+    // guardar user no contexto
     login({
-      name: decoded.name,
+      nickName: decoded.nickName,
       role: decoded.role,
     });
+
 
     // redirect por role
     navigate(decoded.role === "ADMIN" ? "/admin" : "/app");

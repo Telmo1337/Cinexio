@@ -20,7 +20,7 @@ services:
       - aw-network
 
   backend:
-    build: .
+    build: ./backend
     container_name: aw-backend
     restart: always
     depends_on:
@@ -29,9 +29,20 @@ services:
     environment:
       PORT: 5050
       JWT_SECRET: super_secret_key
-      DATABASE_URL: "mysql://root:root@mysql:3306/media_app"
+      DATABASE_URL: mysql://root:root@mysql:3306/media_app
     ports:
       - "5050:5050"
+    networks:
+      - aw-network
+
+  frontend:
+    build: ./frontend
+    container_name: aw-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     networks:
       - aw-network
 

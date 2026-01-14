@@ -38,12 +38,8 @@ app.use(express.json())
 //perspetiva para o futuro para implementar frontend neste projeto
 //configure cors (allow comms between frontend and backend)
 //perspective for the future to implement frontend in this project
-app.use(
-    cors( {
-        origin: "http://localhost:5173",
-        credentials: true,
-    })
-)
+app.use(cors());
+
 
 
 //rotas PRINCIPAIS

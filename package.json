@@ -1,0 +1,7 @@
+{
+  "name": "cinexio-app",
+  "private": true,
+  "scripts": {
+    "Cinexio": "docker compose down && docker compose up -d --build"
+  }
+}
