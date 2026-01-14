@@ -14,9 +14,9 @@ export default function Settings() {
   return (
     <Card withBorder radius="md" shadow="sm" maw={500}>
       <Stack>
-        <Title order={3}>Definições</Title>
+        <Title order={3}>Settings</Title>
 
-        {/* espaço para futuras opções */}
+        {/* space for future options */}
         <Divider />
 
         <Button color="red" onClick={handleLogout}>

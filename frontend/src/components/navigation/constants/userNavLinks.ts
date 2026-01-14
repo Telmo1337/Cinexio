@@ -1,10 +1,14 @@
 export const userNavLinks = [
-    {
-        label: 'Profile',
-        to: 'profile',
-    },
-    {
-        label: 'Settings',
-        to: 'settings',
-    },
-]
+  {
+    label: "Users",
+    to: "users",
+  },
+  {
+    label: "Profile",
+    to: "profile",
+  },
+  {
+    label: "Settings",
+    to: "settings",
+  },
+];

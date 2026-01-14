@@ -56,7 +56,7 @@ export default function Profile() {
           onSubmit={async (values) => {
             await updateProfile(values);
             await refreshProfile();
-           alert("Perfil atualizado com sucesso");
+           alert("Updated profile successfully");
 
 
           }}

@@ -1,36 +1,59 @@
-import { Button, Group, Text } from "@mantine/core";
+import { Button, Group, Stack, Text } from "@mantine/core";
+import { request } from "../../../../api/http";
+import { useState } from "react";
 
-type Props = {
-  mediaId: string;
-};
 
-export default function LibraryTab({ mediaId }: Props) {
-  function handleAddToLibrary() {
-    console.log("Add media to library:", mediaId);
-    // depois liga:
-    // POST /library/:mediaId
+export default function LibraryTab({ mediaId }: { mediaId: string }) {
+
+  const [loading, setLoading] = useState(false);
+
+  async function addToLibrary() {
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      await request(`library/${mediaId}`, { method: "POST" });
+      alert("Added to your library");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function handleMarkWatched() {
-    console.log("Mark as watched:", mediaId);
-    // PUT /library/:mediaId
+  async function markWatched() {
+    await request(`library/${mediaId}`, {
+      method: "PUT",
+      body: JSON.stringify({ watched: true }),
+    });
+    alert("Marked as watched (now public)");
+  }
+
+  async function addFavorite() {
+    await request(`library/${mediaId}`, {
+      method: "PUT",
+      body: JSON.stringify({ favorite: true }),
+    });
+    alert("Added to favorites (now public)");
   }
 
   return (
-    <>
-      <Text mb="sm">
-        Personal CINEXIO Library (watched, favorite, rating)
+    <Stack>
+      <Text c="dimmed">
+        Only watched, rated or favorited media is visible on your public profile.
       </Text>
 
       <Group>
-        <Button variant="light" onClick={handleAddToLibrary}>
+        <Button variant="light" onClick={addToLibrary} disabled={loading}>
           Add to Library
         </Button>
 
-        <Button variant="subtle" onClick={handleMarkWatched}>
+        <Button onClick={markWatched}>
           Mark as Watched
         </Button>
+
+        <Button variant="subtle" onClick={addFavorite}>
+          Favorite
+        </Button>
       </Group>
-    </>
+    </Stack>
   );
 }

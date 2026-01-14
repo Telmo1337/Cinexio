@@ -17,7 +17,14 @@ export async function getPublicLibraryService(nickName) {
   if (!user) throw new Error("User not found");
 
   const library = await prisma.userMedia.findMany({
-    where: { userId: user.id },
+    where: {
+      userId: user.id,
+      OR: [
+        { watched: true },
+        { favorite: true },
+        { rating: { not: null } }
+      ]
+    },
     select: {
       watched: true,
       rating: true,
@@ -33,6 +40,7 @@ export async function getPublicLibraryService(nickName) {
       }
     }
   });
+
 
   return {
     user: user.nickName,
@@ -69,8 +77,8 @@ export async function getLibraryStatsService(userId) {
   const averageRating =
     ratings.length > 0
       ? Number(
-          (ratings.reduce((acc, cur) => acc + cur.rating, 0) / ratings.length).toFixed(1)
-        )
+        (ratings.reduce((acc, cur) => acc + cur.rating, 0) / ratings.length).toFixed(1)
+      )
       : null;
 
   return {
@@ -124,46 +132,50 @@ export async function getUserLibraryService(userId) {
 
 // ATUALIZAR ENTRADA DA BIBLIOTECA
 export async function updateLibraryEntryService(userId, mediaId, body) {
-
-  // Validar dados com Zod
   const parsed = updateLibrarySchema.safeParse(body);
   if (!parsed.success) {
     throw new Error(parsed.error.errors[0].message);
   }
 
-  const update = { ...parsed.data };
+  const data = { ...parsed.data };
 
-  if(parsed.data.watched === true) {
-    update.status = "WATCHED";
-
+  // lógica de status
+  if (parsed.data.watched === true) {
+    data.status = "WATCHED";
   }
 
-  if(parsed.data.status === "WATCHED"){
-    update.watched = true;
+  if (parsed.data.status === "WATCHED") {
+    data.watched = true;
   }
 
-  if(parsed.data.status === "WANT_TO_WATCH"){
-    update.watched = false;
-    update.calendarAt = null;
+  if (parsed.data.status === "WANT_TO_WATCH") {
+    data.watched = false;
+    data.calendarAt = null;
   }
 
-  if(parsed.data.status === "WATCHING"){
-    update.watched = false;
+  if (parsed.data.status === "WATCHING") {
+    data.watched = false;
   }
 
-  if(parsed.data.status === "ABANDONED"){
-    update.watched = false;
+  if (parsed.data.status === "ABANDONED") {
+    data.watched = false;
   }
 
-  const updated = await prisma.userMedia.update({
+  const entry = await prisma.userMedia.upsert({
     where: {
       userId_mediaId: { userId, mediaId }
     },
-    data: update
+    update: data,
+    create: {
+      userId,
+      mediaId,
+      ...data
+    }
   });
 
-  return updated;
+  return entry;
 }
+
 
 
 
@@ -171,16 +183,20 @@ export async function updateLibraryEntryService(userId, mediaId, body) {
 // ADICIONAR MEDIA À BIBLIOTECA
 export async function addToLibraryService(userId, mediaId) {
 
-  // Verificar se existe media
-  const mediaExists = await prisma.media.findUnique({ where: { id: mediaId } });
-  if (!mediaExists) throw new Error("Media not found");
+  const mediaExists = await prisma.media.findUnique({
+    where: { id: mediaId }
+  });
+  if (!mediaExists) {
+    throw new Error("Media not found");
+  }
 
-  // Verificar se já está na biblioteca
   const exists = await prisma.userMedia.findUnique({
     where: { userId_mediaId: { userId, mediaId } }
   });
 
-  if (exists) throw new Error("Media already in library");
+  if (exists) {
+    return exists; //  NÃO lançar erro
+  }
 
   return await prisma.userMedia.create({
     data: { userId, mediaId }

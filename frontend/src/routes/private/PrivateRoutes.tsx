@@ -7,12 +7,15 @@ import { PrivateRoute } from "../PrivateRoute";
 import MediaDetails from "../../pages/app/Media/MediaDetails";
 import AppLayout from "../../components/AppLayout";
 import Media from "../../pages/app/Media";
-
+import UserPublicProfile from "../../pages/app/UserPublicProfile";
+import UserSearch from "../../pages/app/UserSearch";
 
 export default function PrivateRoutes() {
   return (
     <AppLayout>
       <Routes>
+
+
         {/* /app */}
         <Route
           index
@@ -49,6 +52,27 @@ export default function PrivateRoutes() {
           element={
             <PrivateRoute roles={["MEMBER", "ADMIN"]}>
               <Settings />
+            </PrivateRoute>
+          }
+        />
+
+
+         {/* procurar utilizadores */}
+        <Route
+          path="users"
+          element={
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
+              <UserSearch />
+            </PrivateRoute>
+          }
+        />
+
+        {/* perfil público */}
+        <Route
+          path="users/:nickName"
+          element={
+            <PrivateRoute roles={["MEMBER", "ADMIN"]}>
+              <UserPublicProfile />
             </PrivateRoute>
           }
         />

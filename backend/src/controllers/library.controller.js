@@ -88,13 +88,18 @@ export async function updateLibraryEntry(req, res, next) {
 export async function addToLibrary(req, res, next) {
   try {
     const { mediaId } = validateSchema(
-      z.object({ mediaId: z.string().uuid("Invalid media id") }),
+      z.object({ mediaId: z.string().uuid() }),
       req.params
     );
+
     const result = await addToLibraryService(req.user.id, mediaId);
+
     res.status(201).json(result);
-  } catch (err) { next(err); }
+  } catch (err) {
+    next(err);
+  }
 }
+
 
 
 
